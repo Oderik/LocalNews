@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Local News</string>
-    <string name="title_news_detail">News Detail</string>
+    <string name="app_name">NewsMixer</string>
+    <string name="title_news_detail">Details</string>
     <string name="label_link_url">&lt;a href=\"%1$s\">Im Browser öffnen&lt;a></string>
     <string name="action_refresh">News aktualisieren</string>
     <string name="action_refresh_condensed">Aktualisieren</string>
