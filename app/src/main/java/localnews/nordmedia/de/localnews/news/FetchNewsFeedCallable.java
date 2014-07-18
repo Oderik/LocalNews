@@ -1,6 +1,7 @@
 package localnews.nordmedia.de.localnews.news;
 
 import android.content.Context;
+import android.location.Location;
 
 import java.io.InputStream;
 
@@ -12,9 +13,9 @@ public class FetchNewsFeedCallable implements FetchNewsListCallable {
     private final DataSource dataSource;
     private final JsonNewsFeedReader newsFeedReader = new JsonNewsFeedReader();
 
-    public FetchNewsFeedCallable(final Context context) {
+    public FetchNewsFeedCallable(final Context context, final Location location) {
         this.context = context.getApplicationContext();
-        dataSource = new AssetsDataSource(context);
+        dataSource = new HttpDataSource(context, location);
     }
 
     @Override

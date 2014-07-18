@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "localnews.nordmedia.de.localnews"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     compile 'com.android.support:support-v4:19.+'
+//    compile 'com.google.android.gms:play-services:5.0.77'
 }
