@@ -12,9 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-
-import java.util.List;
-
 import localnews.nordmedia.de.localnews.news.News;
 import localnews.nordmedia.de.localnews.news.NewsFeed;
 import localnews.nordmedia.de.localnews.news.NewsLoader;
@@ -82,6 +79,7 @@ public class NewsListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+;
         LoaderManager loaderManager = getLoaderManager();
         newsLoader = loaderManager.initLoader(1, null, new LoaderManager.LoaderCallbacks<NewsFeed>() {
             @Override
