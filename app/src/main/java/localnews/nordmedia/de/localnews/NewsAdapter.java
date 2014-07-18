@@ -1,8 +1,6 @@
 package localnews.nordmedia.de.localnews;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,7 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import localnews.nordmedia.de.localnews.image.BitmapCache;
+import localnews.nordmedia.de.localnews.image.LoadBitmapTask;
 import localnews.nordmedia.de.localnews.news.News;
 import localnews.nordmedia.de.localnews.news.NewsFeed;
 
@@ -59,13 +57,7 @@ public class NewsAdapter extends BaseAdapter {
 
         if (item.imageUrl != null) {
             holder.image.setTag(item.imageUrl);
-            new AsyncTask<String, Void, Bitmap>() {
-
-                @Override
-                protected Bitmap doInBackground(final String... params) {
-                    return BitmapCache.INSTANCE.get(params[0]);
-                }
-
+            new LoadBitmapTask() {
                 @Override
                 protected void onPostExecute(final Bitmap bitmap) {
                     if (bitmap != null && item.imageUrl.equals(holder.image.getTag())) {
@@ -113,4 +105,5 @@ public class NewsAdapter extends BaseAdapter {
         }
 
     }
+
 }

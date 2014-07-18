@@ -1,5 +1,6 @@
 package localnews.nordmedia.de.localnews;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -8,10 +9,14 @@ import android.text.method.MovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import localnews.nordmedia.de.localnews.image.LoadBitmapTask;
 import localnews.nordmedia.de.localnews.news.News;
+
+import static localnews.nordmedia.de.localnews.Views.*;
 
 /**
  * A fragment representing a single News detail screen.
@@ -58,6 +63,12 @@ public class NewsDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_news_detail, container, false);
 
         final ViewHolder viewHolder = new ViewHolder(rootView);
+        new LoadBitmapTask() {
+            @Override
+            protected void onPostExecute(final Bitmap bitmap) {
+                viewHolder.image.setImageBitmap(bitmap);
+            }
+        }.execute(news.imageUrl);
         viewHolder.title.setText(news.title);
         viewHolder.content.setText(news.teaser);
         viewHolder.url.setText(Html.fromHtml(getString(R.string.label_link_url, news.url)));
@@ -66,14 +77,16 @@ public class NewsDetailFragment extends Fragment {
 
     static class ViewHolder {
         final TextView title, content, url;
+        final ImageView image;
         final View view;
 
         ViewHolder(View view) {
             this.view = view;
-            title = Views.find(view, R.id.title);
-            content = Views.find(view, R.id.content);
-            url = Views.find(view, R.id.link);
+            title = find(view, R.id.title);
+            content = find(view, R.id.content);
+            url = find(view, R.id.link);
             url.setMovementMethod(LinkMovementMethod.getInstance());
+            image = find(view, R.id.image);
         }
     }
 }

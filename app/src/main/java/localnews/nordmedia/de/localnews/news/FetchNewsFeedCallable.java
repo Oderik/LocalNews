@@ -15,8 +15,8 @@ public class FetchNewsFeedCallable implements FetchNewsListCallable {
 
     public FetchNewsFeedCallable(final Context context, final Location location) {
         this.context = context.getApplicationContext();
-//        dataSource = new HttpDataSource(context, 9.814976, 52.321231);
-        dataSource = new AssetsDataSource(context);
+        dataSource = new HttpDataSource(context, 9.814976, 52.321231);
+//        dataSource = new AssetsDataSource(context);
     }
 
     @Override
