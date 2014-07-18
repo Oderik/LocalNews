@@ -3,8 +3,6 @@ package localnews.nordmedia.de.localnews.news;
 import android.content.Context;
 import android.location.Location;
 
-import java.io.InputStream;
-
 /**
  * Created by Oderik on 17.07.2014.
  */
@@ -15,7 +13,7 @@ public class FetchNewsFeedCallable implements FetchNewsListCallable {
 
     public FetchNewsFeedCallable(final Context context, final Location location) {
         this.context = context.getApplicationContext();
-        dataSource = new HttpDataSource(context, location);
+        dataSource = new HttpDataSource(context, 9.814976, 52.321231);
     }
 
     @Override

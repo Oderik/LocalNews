@@ -1,8 +1,8 @@
 package localnews.nordmedia.de.localnews.news;
 
 import android.content.Context;
-import android.location.Location;
 import android.net.http.AndroidHttpClient;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,22 +15,27 @@ import java.io.InputStream;
  */
 public class HttpDataSource implements DataSource {
 
+    public static final String TAG = HttpDataSource.class.getSimpleName();
     private final AndroidHttpClient httpClient;
-    private final Location location;
+    private double longitude;
+    private double latitude;
 
-    public HttpDataSource(final Context context, final Location location) {
-        this.location = location;
+    public HttpDataSource(final Context context, final double longitude, final double latitude) {
         httpClient = AndroidHttpClient.newInstance(System.getProperty("http.agent"), context);
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     @Override
     public InputStream open() throws IOException {
-        final HttpGet httpGet = new HttpGet("http://hackt.sichwarm.de:8080/news/list?"+formatLocation());
+        final String uri = "http://hackt.sichwarm.de:8080/news/list?" + formatLocation();
+        Log.d(TAG, "Requesting " + uri);
+        final HttpGet httpGet = new HttpGet(uri);
         final HttpResponse httpResponse = httpClient.execute(httpGet);
         return httpResponse.getEntity().getContent();
     }
 
     private String formatLocation() {
-        return String.format("long=%f&lat=%f", location.getLongitude(), location.getLatitude());
+        return String.format("longitude=%s&latitude=%s&radius=50.0", longitude, latitude);
     }
 }
