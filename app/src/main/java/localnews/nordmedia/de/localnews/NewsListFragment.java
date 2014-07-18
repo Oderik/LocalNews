@@ -6,6 +6,9 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -21,7 +24,7 @@ import localnews.nordmedia.de.localnews.news.NewsLoader;
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
  * currently being viewed in a {@link NewsDetailFragment}.
- * <p>
+ * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
@@ -53,6 +56,7 @@ public class NewsListFragment extends ListFragment {
     public interface Callbacks {
         /**
          * Callback for when an item has been selected.
+         *
          * @param news
          */
         public void onItemSelected(News news);
@@ -97,13 +101,13 @@ public class NewsListFragment extends ListFragment {
         });
 
         setListAdapter(new NewsAdapter());
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        newsLoader.forceLoad();
+        newsLoader.startLoading();
     }
 
     @Override
@@ -182,4 +186,24 @@ public class NewsListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
+    @Override
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                refresh();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void refresh() {
+        newsLoader.forceLoad();
+    }
 }

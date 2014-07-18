@@ -9,6 +9,7 @@ import android.support.v4.content.AsyncTaskLoader;
 public class NewsLoader extends AsyncTaskLoader<NewsFeed> {
 
     private final FetchNewsListCallable callable;
+    private NewsFeed newsFeed;
 
     public NewsLoader(Context context) {
         super(context);
@@ -18,10 +19,19 @@ public class NewsLoader extends AsyncTaskLoader<NewsFeed> {
     @Override
     public NewsFeed loadInBackground() {
         try {
-            return callable.call();
+            newsFeed = callable.call();
+            return newsFeed;
         } catch (Exception e) {
             return null;
         }
     }
 
+    @Override
+    protected void onStartLoading() {
+        if (newsFeed != null) {
+            deliverResult(newsFeed);
+        } else {
+            forceLoad();
+        }
+    }
 }
