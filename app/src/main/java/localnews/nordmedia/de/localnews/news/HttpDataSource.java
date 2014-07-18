@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpGet;
 import java.io.IOException;
 import java.io.InputStream;
 
+import localnews.nordmedia.de.localnews.DataSource;
+
 /**
  * Created by Oderik on 17.07.2014.
  */

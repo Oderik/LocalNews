@@ -1,4 +1,4 @@
-package localnews.nordmedia.de.localnews.news;
+package localnews.nordmedia.de.localnews;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -3,6 +3,8 @@ package localnews.nordmedia.de.localnews.news;
 import android.content.Context;
 import android.location.Location;
 
+import localnews.nordmedia.de.localnews.DataSource;
+
 /**
  * Created by Oderik on 17.07.2014.
  */

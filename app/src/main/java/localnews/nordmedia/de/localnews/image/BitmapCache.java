@@ -1,13 +1,15 @@
 package localnews.nordmedia.de.localnews.image;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import localnews.nordmedia.de.localnews.DataSource;
 
 /**
  * Created by Oderik on 18.07.2014.
@@ -37,7 +39,13 @@ public class BitmapCache extends LruCache<String, Bitmap> {
     @Override
     protected Bitmap create(final String key) {
         try {
-            return BitmapFactory.decodeStream(new URL(key).openStream());
+            return LimitingBitmapFactory.decodeDataSource(new DataSource() {
+                private final URL url = new URL(key);
+                @Override
+                public InputStream open() throws IOException {
+                    return url.openStream();
+                }
+            }, 512);
         } catch (IOException e) {
             Log.e(TAG, "Could not load image " + key, e);
             return null;
