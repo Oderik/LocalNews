@@ -44,6 +44,8 @@ public class NewsListFragment extends ListFragment {
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private Loader<NewsFeed> newsLoader;
+    private View emptyView;
+    private LoaderManager.LoaderCallbacks<NewsFeed> loaderCallbacks;
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -79,12 +81,12 @@ public class NewsListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-;
+        ;
         LoaderManager loaderManager = getLoaderManager();
-        newsLoader = loaderManager.initLoader(1, null, new LoaderManager.LoaderCallbacks<NewsFeed>() {
+        loaderCallbacks = new LoaderManager.LoaderCallbacks<NewsFeed>() {
             @Override
             public NewsLoader onCreateLoader(int id, Bundle args) {
-                return new NewsLoader(NewsListFragment.this.getActivity());
+                return new NewsLoader(NewsListFragment.this.getActivity(), args.getDouble("radius", 25));
             }
 
             @Override
@@ -96,7 +98,10 @@ public class NewsListFragment extends ListFragment {
             public void onLoaderReset(Loader<NewsFeed> loader) {
                 Log.d("tag", "onLoaderReset");
             }
-        });
+        };
+        final Bundle bundle = new Bundle();
+        bundle.putDouble("radius", 25);
+        newsLoader = loaderManager.initLoader(1, bundle, loaderCallbacks);
 
         setListAdapter(new NewsAdapter());
         setHasOptionsMenu(true);
@@ -196,9 +201,24 @@ public class NewsListFragment extends ListFragment {
             case R.id.refresh:
                 refresh();
                 return true;
+            case R.id.radius25:
+                setRadius(25);
+                return true;
+            case R.id.radius100:
+                setRadius(100);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setRadius(final int radius) {
+        final Bundle args = new Bundle();
+        args.putDouble("radius", radius);
+        getLoaderManager().restartLoader(1, args, loaderCallbacks);
+    }
+
+    private void preferences() {
     }
 
     private void refresh() {

@@ -14,20 +14,22 @@ import android.support.v4.content.AsyncTaskLoader;
 */
 public class NewsLoader extends AsyncTaskLoader<NewsFeed> implements LocationListener {
 
+    private final double radius;
     private NewsFeed newsFeed;
 
-    public NewsLoader(Context context) {
+    public NewsLoader(Context context, final double radius) {
         super(context);
+        this.radius = radius;
     }
 
-    private FetchNewsFeedCallable createNewsFeedCallable(final Context context, final Location location) {
-        return new FetchNewsFeedCallable(context, location);
+    private FetchNewsFeedCallable createNewsFeedCallable(final Context context, final Location location, final double radius) {
+        return new FetchNewsFeedCallable(context, location, radius);
     }
 
     @Override
     public NewsFeed loadInBackground() {
         final Location location = getLocation();
-        final FetchNewsFeedCallable fetchNewsFeedCallable = createNewsFeedCallable(getContext(), location);
+        final FetchNewsFeedCallable fetchNewsFeedCallable = createNewsFeedCallable(getContext(), location, radius);
         try {
             newsFeed = fetchNewsFeedCallable.call();
             return newsFeed;

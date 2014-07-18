@@ -4,9 +4,21 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/refresh"
+        android:icon="@drawable/ic_action_refresh"
         android:title="@string/action_refresh"
         android:titleCondensed="@string/action_refresh_condensed"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_action_refresh"
+        app:showAsAction="always"
         />
+    <item
+        android:id="@+id/radius25"
+        android:icon="@drawable/ic_action_preferences"
+        android:title="Radius: 25km"
+        android:titleCondensed="Radius: 25km"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/radius100"
+        android:icon="@drawable/ic_action_preferences"
+        android:title="Radius: 100km"
+        android:titleCondensed="Radius: 100km"
+        app:showAsAction="ifRoom"/>
 </menu>

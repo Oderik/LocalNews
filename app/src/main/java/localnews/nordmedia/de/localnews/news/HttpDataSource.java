@@ -19,10 +19,12 @@ public class HttpDataSource implements DataSource {
 
     public static final String TAG = HttpDataSource.class.getSimpleName();
     private final AndroidHttpClient httpClient;
+    private final double radius;
     private double longitude;
     private double latitude;
 
-    public HttpDataSource(final Context context, final double longitude, final double latitude) {
+    public HttpDataSource(final Context context, final double longitude, final double latitude, final double radius) {
+        this.radius = radius;
         httpClient = AndroidHttpClient.newInstance(System.getProperty("http.agent"), context);
         this.longitude = longitude;
         this.latitude = latitude;
@@ -38,6 +40,6 @@ public class HttpDataSource implements DataSource {
     }
 
     private String formatLocation() {
-        return String.format("longitude=%s&latitude=%s&radius=50.0", longitude, latitude);
+        return String.format("longitude=%s&latitude=%s&radius=%s", longitude, latitude, radius);
     }
 }

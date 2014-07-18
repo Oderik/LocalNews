@@ -13,9 +13,9 @@ public class FetchNewsFeedCallable implements FetchNewsListCallable {
     private final DataSource dataSource;
     private final JsonNewsFeedReader newsFeedReader = new JsonNewsFeedReader();
 
-    public FetchNewsFeedCallable(final Context context, final Location location) {
+    public FetchNewsFeedCallable(final Context context, final Location location, final double radius) {
         this.context = context.getApplicationContext();
-        dataSource = new HttpDataSource(context, 9.814976, 52.321231);
+        dataSource = new HttpDataSource(context, 9.814976, 52.321231, radius);
 //        dataSource = new AssetsDataSource(context);
     }
 
